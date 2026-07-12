@@ -9,21 +9,6 @@ const User = require('./models/User');
 
 const app = express();
 
-const seedAdmin = async () => {
-  try {
-    await User.deleteMany({ email: 'admin@nexora.com' });
-    const exists = await User.findOne({ email: 'admin@nexora' });
-    if (!exists) {
-      await User.create({ name: 'Admin', email: 'admin@nexora', password: 'admin123', role: 'admin' });
-      console.log('Default admin created: admin@nexora / admin123');
-    }
-  } catch (e) {
-    console.error('Admin seed error:', e.message);
-  }
-};
-
-connectDB().then(seedAdmin);
-
 app.use(helmet({
   contentSecurityPolicy: false,
   crossOriginEmbedderPolicy: false,
@@ -82,6 +67,25 @@ app.put('/api/status/shutdown', protect, (req, res) => {
   res.json({ success: true, shutdown: shutdownMode, message: shutdownMessage });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+async function start() {
+  try {
+    await connectDB();
+
+    const adminExists = await User.findOne({ email: 'admin@nexora' });
+    if (!adminExists) {
+      await User.deleteMany({ email: 'admin@nexora.com' });
+      await User.create({ name: 'Admin', email: 'admin@nexora', password: 'admin123', role: 'admin' });
+      console.log('Admin user created: admin@nexora / admin123');
+    } else {
+      console.log('Admin user exists: admin@nexora');
+    }
+  } catch (e) {
+    console.error('Startup error:', e.message);
+  }
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+start();
