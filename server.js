@@ -50,7 +50,9 @@ app.use('/api/contact', require('./routes/contact'));
 
 const { protect } = require('./middleware/auth');
 const { getDashboard } = require('./controllers/projectController');
+const { getContacts } = require('./controllers/contactController');
 app.get('/api/dashboard', protect, getDashboard);
+app.get('/api/contacts', protect, getContacts);
 
 app.use((req, res, next) => {
   if (req.path.startsWith('/api/')) {

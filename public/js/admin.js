@@ -98,8 +98,35 @@
       document.getElementById('statSoftware').textContent = data.data.software;
       document.getElementById('statFeatured').textContent = data.data.featured;
       await loadAllProjects();
+      await loadMessages();
     } catch (err) {
       showToast('Network error', 'error');
+    }
+  }
+
+  async function loadMessages() {
+    try {
+      const res = await fetch('/api/contacts', { headers: authHeaders() });
+      const data = await res.json();
+      const tbody = document.getElementById('messagesTableBody');
+      if (!data.success || !data.data.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="loading-placeholder">No messages yet</td></tr>';
+        return;
+      }
+      tbody.innerHTML = data.data
+        .map(
+          (m) => `
+        <tr>
+          <td><strong>${m.name}</strong></td>
+          <td>${m.email}</td>
+          <td>${m.phone || '-'}</td>
+          <td style="max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${m.message.replace(/"/g, '&quot;')}">${m.message}</td>
+          <td>${new Date(m.createdAt).toLocaleDateString()}</td>
+        </tr>`
+        )
+        .join('');
+    } catch (err) {
+      console.error(err);
     }
   }
 
