@@ -41,6 +41,18 @@ app.get('/api/dashboard', protect, getDashboard);
 app.get('/api/contacts', protect, getContacts);
 app.put('/api/contacts/:id/toggle', protect, toggleResponded);
 
+let shutdownMode = false;
+let shutdownMessage = 'We are temporarily shut down due to out of stock. We will be back soon!';
+
+app.get('/api/status', (req, res) => {
+  res.json({ shutdown: shutdownMode, message: shutdownMessage });
+});
+app.put('/api/status/shutdown', protect, (req, res) => {
+  shutdownMode = req.body.shutdown !== undefined ? req.body.shutdown : shutdownMode;
+  shutdownMessage = req.body.message || shutdownMessage;
+  res.json({ success: true, shutdown: shutdownMode, message: shutdownMessage });
+});
+
 app.use((req, res, next) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ success: false, message: 'API endpoint not found' });
@@ -54,18 +66,6 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-
-let shutdownMode = false;
-let shutdownMessage = 'We are temporarily shut down due to out of stock. We will be back soon!';
-
-app.get('/api/status', (req, res) => {
-  res.json({ shutdown: shutdownMode, message: shutdownMessage });
-});
-app.put('/api/status/shutdown', protect, (req, res) => {
-  shutdownMode = req.body.shutdown !== undefined ? req.body.shutdown : shutdownMode;
-  shutdownMessage = req.body.message || shutdownMessage;
-  res.json({ success: true, shutdown: shutdownMode, message: shutdownMessage });
-});
 
 async function start() {
   try {
