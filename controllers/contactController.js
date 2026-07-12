@@ -21,3 +21,15 @@ exports.getContacts = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+exports.toggleResponded = async (req, res) => {
+  try {
+    const contact = await Contact.findById(req.params.id);
+    if (!contact) return res.status(404).json({ success: false, message: 'Message not found' });
+    contact.responded = !contact.responded;
+    await contact.save();
+    res.status(200).json({ success: true, data: contact });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

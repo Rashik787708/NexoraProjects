@@ -50,9 +50,10 @@ app.use('/api/contact', require('./routes/contact'));
 
 const { protect } = require('./middleware/auth');
 const { getDashboard } = require('./controllers/projectController');
-const { getContacts } = require('./controllers/contactController');
+const { getContacts, toggleResponded } = require('./controllers/contactController');
 app.get('/api/dashboard', protect, getDashboard);
 app.get('/api/contacts', protect, getContacts);
+app.put('/api/contacts/:id/toggle', protect, toggleResponded);
 
 app.use((req, res, next) => {
   if (req.path.startsWith('/api/')) {
@@ -67,6 +68,19 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
+
+let shutdownMode = false;
+let shutdownMessage = 'We are temporarily shut down due to out of stock. We will be back soon!';
+
+app.get('/api/status', (req, res) => {
+  res.json({ shutdown: shutdownMode, message: shutdownMessage });
+});
+app.put('/api/status/shutdown', protect, (req, res) => {
+  shutdownMode = req.body.shutdown !== undefined ? req.body.shutdown : shutdownMode;
+  shutdownMessage = req.body.message || shutdownMessage;
+  res.json({ success: true, shutdown: shutdownMode, message: shutdownMessage });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

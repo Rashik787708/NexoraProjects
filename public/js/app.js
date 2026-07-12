@@ -30,7 +30,26 @@ async function apiFetch(url, options = {}) {
 window.addEventListener('load', () => {
   const loader = document.getElementById('loader');
   if (loader) setTimeout(() => loader.classList.add('hidden'), 600);
+  checkShutdown();
 });
+
+async function checkShutdown() {
+  try {
+    const res = await fetch(API + '/status');
+    const data = await res.json();
+    if (data.shutdown) {
+      let banner = document.getElementById('shutdownBanner');
+      if (!banner) {
+        banner = document.createElement('div');
+        banner.id = 'shutdownBanner';
+        banner.className = 'shutdown-banner';
+        document.body.prepend(banner);
+      }
+      banner.textContent = data.message;
+      banner.classList.add('show');
+    }
+  } catch (e) {}
+}
 
 /* --- Navbar --- */
 document.addEventListener('DOMContentLoaded', () => {

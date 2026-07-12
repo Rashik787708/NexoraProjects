@@ -6,6 +6,12 @@
   <title>Admin Dashboard - Nexora Projects</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <script>
+    (function() {
+      var t = localStorage.getItem('nexora_token') || sessionStorage.getItem('nexora_token');
+      if (!t) { window.location.href = '/admin/login'; }
+    })();
+  </script>
 </head>
 <body>
   <div id="loader" class="loader"><div class="loader-inner"><div class="loader-spinner"></div><p class="loader-text">Nexora Projects</p></div></div>
@@ -31,7 +37,10 @@
             <h1>Dashboard</h1>
             <p>Welcome back, Admin</p>
           </div>
-          <div style="display:flex;gap:12px">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+            <label class="checkbox-label" style="padding:8px 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm)">
+              <input type="checkbox" id="shutdownToggle"><span style="font-size:.85rem;color:var(--text-secondary)">Temporarily Shutdown</span>
+            </label>
             <button class="btn btn-outline" id="changePassBtn">Change Password</button>
             <button class="btn btn-primary" id="addProjectBtn">+ New Project</button>
           </div>
@@ -79,6 +88,7 @@
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Message</th>
+                  <th>Status</th>
                   <th>Date</th>
                 </tr>
               </thead>

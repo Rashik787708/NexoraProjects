@@ -108,6 +108,22 @@ input, select, textarea { font: inherit; color: inherit; }
 .nav-toggle.active span:nth-child(2) { opacity: 0; }
 .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
+/* ========== SHUTDOWN BANNER ========== */
+.shutdown-banner {
+  display: none;
+  background: linear-gradient(90deg, #e74c3c, #c0392b);
+  color: #fff;
+  text-align: center;
+  padding: 12px 20px;
+  font-size: .9rem;
+  font-weight: 600;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 10002;
+  box-shadow: 0 4px 16px rgba(231,76,60,.3);
+}
+.shutdown-banner.show { display: block; }
+
 /* ========== HERO ========== */
 .hero {
   min-height: 100vh; display: flex; align-items: center;

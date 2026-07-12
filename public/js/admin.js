@@ -66,6 +66,7 @@
       loadDashboard();
       initDashboardListeners();
       initPasswordChange();
+      initShutdownToggle();
     }
 
     /* --- Logout --- */
@@ -120,11 +121,21 @@
           <td><strong>${m.name}</strong></td>
           <td>${m.email}</td>
           <td>${m.phone || '-'}</td>
-          <td style="max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${m.message.replace(/"/g, '&quot;')}">${m.message}</td>
+          <td style="max-width:250px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${m.message.replace(/"/g, '&quot;')}">${m.message}</td>
+          <td><button class="action-btn ${m.responded ? 'action-btn-edit' : 'action-btn-delete'}" data-toggle-status="${m._id}" style="cursor:pointer">${m.responded ? 'Responded' : 'Pending'}</button></td>
           <td>${new Date(m.createdAt).toLocaleDateString()}</td>
         </tr>`
         )
         .join('');
+
+      tbody.querySelectorAll('[data-toggle-status]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const id = btn.dataset.toggleStatus;
+          const res = await fetch('/api/contacts/' + id + '/toggle', { method: 'PUT', headers: authHeaders() });
+          const data = await res.json();
+          if (data.success) loadMessages();
+        });
+      });
     } catch (err) {
       console.error(err);
     }
@@ -335,5 +346,27 @@
         submitBtn.disabled = false;
       });
     }
+  }
+
+  /* --- Shutdown Toggle --- */
+  function initShutdownToggle() {
+    const toggle = document.getElementById('shutdownToggle');
+    if (!toggle) return;
+
+    fetch('/api/status').then(r => r.json()).then(data => {
+      toggle.checked = data.shutdown;
+    });
+
+    toggle.addEventListener('change', async () => {
+      const res = await fetch('/api/status/shutdown', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + adminToken },
+        body: JSON.stringify({ shutdown: toggle.checked }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast(toggle.checked ? 'Shutdown mode ON' : 'Shutdown mode OFF');
+      }
+    });
   }
 })();
