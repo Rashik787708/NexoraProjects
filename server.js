@@ -71,9 +71,10 @@ async function start() {
   try {
     await connectDB();
 
+    await User.deleteMany({ email: 'admin@nexora.com' });
+
     const adminExists = await User.findOne({ email: 'admin@nexora' }).select('+password');
     if (!adminExists) {
-      await User.deleteMany({ email: 'admin@nexora.com' });
       await User.create({ name: 'Admin', email: 'admin@nexora', password: 'admin123', role: 'admin' });
       console.log('Admin user created: admin@nexora / admin123');
     } else {
