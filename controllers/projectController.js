@@ -50,10 +50,14 @@ exports.getProject = async (req, res) => {
   }
 };
 
+function bufferToDataUri(file) {
+  return `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
+}
+
 exports.createProject = async (req, res) => {
   try {
     if (req.file) {
-      req.body.thumbnail = `/uploads/${req.file.filename}`;
+      req.body.thumbnail = bufferToDataUri(req.file);
     }
     if (req.body.technology && typeof req.body.technology === 'string') {
       req.body.technology = req.body.technology.split(',').map((t) => t.trim());
@@ -68,7 +72,7 @@ exports.createProject = async (req, res) => {
 exports.updateProject = async (req, res) => {
   try {
     if (req.file) {
-      req.body.thumbnail = `/uploads/${req.file.filename}`;
+      req.body.thumbnail = bufferToDataUri(req.file);
     }
     if (req.body.technology && typeof req.body.technology === 'string') {
       req.body.technology = req.body.technology.split(',').map((t) => t.trim());
