@@ -65,6 +65,7 @@
       }
       loadDashboard();
       initDashboardListeners();
+      initPasswordChange();
     }
 
     /* --- Logout --- */
@@ -249,6 +250,62 @@
         } catch (err) {
           showToast('Network error', 'error');
         }
+      });
+    }
+  }
+
+  /* --- Change Password --- */
+  function initPasswordChange() {
+    const btn = document.getElementById('changePassBtn');
+    const modal = document.getElementById('passModal');
+    const closeBtn = document.getElementById('passModalClose');
+    const cancelBtn = document.getElementById('passCancelBtn');
+    const form = document.getElementById('passForm');
+
+    if (btn) btn.addEventListener('click', () => modal.classList.add('active'));
+    if (closeBtn) closeBtn.addEventListener('click', () => { modal.classList.remove('active'); form.reset(); });
+    if (cancelBtn) cancelBtn.addEventListener('click', () => { modal.classList.remove('active'); form.reset(); });
+    if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('active'); form.reset(); } });
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const current = document.getElementById('currentPass').value;
+        const newPass = document.getElementById('newPass').value;
+        const confirm = document.getElementById('confirmPass').value;
+
+        if (newPass !== confirm) {
+          showToast('New passwords do not match', 'error');
+          return;
+        }
+        if (newPass.length < 6) {
+          showToast('Password must be at least 6 characters', 'error');
+          return;
+        }
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.textContent = 'Updating...';
+        submitBtn.disabled = true;
+
+        try {
+          const res = await fetch('/api/auth/change-password', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + adminToken },
+            body: JSON.stringify({ currentPassword: current, newPassword: newPass }),
+          });
+          const data = await res.json();
+          if (data.success) {
+            showToast('Password changed successfully!');
+            modal.classList.remove('active');
+            form.reset();
+          } else {
+            showToast(data.message || 'Failed to change password', 'error');
+          }
+        } catch (err) {
+          showToast('Network error', 'error');
+        }
+        submitBtn.textContent = 'Update Password';
+        submitBtn.disabled = false;
       });
     }
   }

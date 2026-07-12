@@ -5,10 +5,23 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 const connectDB = require('./config/db');
+const User = require('./models/User');
 
 const app = express();
 
-connectDB();
+const seedAdmin = async () => {
+  try {
+    const exists = await User.findOne({ email: 'admin@nexora.com' });
+    if (!exists) {
+      await User.create({ name: 'Admin', email: 'admin@nexora.com', password: 'admin123', role: 'admin' });
+      console.log('Default admin created: admin@nexora.com / admin123');
+    }
+  } catch (e) {
+    console.error('Admin seed error:', e.message);
+  }
+};
+
+connectDB().then(seedAdmin);
 
 app.use(helmet({
   contentSecurityPolicy: false,
