@@ -71,13 +71,21 @@ async function start() {
   try {
     await connectDB();
 
-    const adminExists = await User.findOne({ email: 'admin@nexora' });
+    const adminExists = await User.findOne({ email: 'admin@nexora' }).select('+password');
     if (!adminExists) {
       await User.deleteMany({ email: 'admin@nexora.com' });
       await User.create({ name: 'Admin', email: 'admin@nexora', password: 'admin123', role: 'admin' });
       console.log('Admin user created: admin@nexora / admin123');
     } else {
-      console.log('Admin user exists: admin@nexora');
+      const bcrypt = require('bcryptjs');
+      const valid = await bcrypt.compare('admin123', adminExists.password);
+      if (!valid) {
+        adminExists.password = 'admin123';
+        await adminExists.save();
+        console.log('Admin password reset: admin@nexora / admin123');
+      } else {
+        console.log('Admin user ready: admin@nexora');
+      }
     }
   } catch (e) {
     console.error('Startup error:', e.message);
