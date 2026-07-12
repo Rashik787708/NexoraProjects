@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Nexora Projects</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+  <div id="loader" class="loader"><div class="loader-inner"><div class="loader-spinner"></div><p class="loader-text">Nexora Projects</p></div></div>
+
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">Nexora</span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/projects" class="nav-link">Projects</a>
+        <a href="/admin/dashboard" class="nav-link active">Dashboard</a>
+        <button class="btn btn-outline btn-sm" id="logoutBtn">Logout</button>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <main class="dashboard-main">
+    <section class="section">
+      <div class="container">
+        <div class="dash-header fade-up">
+          <div>
+            <h1>Dashboard</h1>
+            <p>Welcome back, Admin</p>
+          </div>
+          <button class="btn btn-primary" id="addProjectBtn">+ New Project</button>
+        </div>
+
+        <div class="dash-stats" id="dashStats">
+          <div class="dash-stat-card"><div class="dash-stat-icon">📦</div><div class="dash-stat-info"><div class="dash-stat-number" id="statTotal">0</div><div class="dash-stat-label">Total Projects</div></div></div>
+          <div class="dash-stat-card"><div class="dash-stat-icon">🔧</div><div class="dash-stat-info"><div class="dash-stat-number" id="statHardware">0</div><div class="dash-stat-label">Hardware</div></div></div>
+          <div class="dash-stat-card"><div class="dash-stat-icon">💻</div><div class="dash-stat-info"><div class="dash-stat-number" id="statSoftware">0</div><div class="dash-stat-label">Software</div></div></div>
+          <div class="dash-stat-card"><div class="dash-stat-icon">⭐</div><div class="dash-stat-info"><div class="dash-stat-number" id="statFeatured">0</div><div class="dash-stat-label">Featured</div></div></div>
+        </div>
+
+        <div class="dash-section fade-up">
+          <div class="dash-section-header">
+            <h2>All Projects</h2>
+          </div>
+          <div class="dash-table-wrapper">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Difficulty</th>
+                  <th>Featured</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="projectsTableBody">
+                <tr><td colspan="6" class="loading-placeholder">Loading projects...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">New Project</h2>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <form id="projectForm" class="modal-form">
+        <input type="hidden" id="projectId">
+        <div class="form-row">
+          <div class="form-group"><label>Title *</label><input type="text" id="pTitle" required></div>
+          <div class="form-group"><label>Category *</label><select id="pCategory" required><option value="hardware">Hardware</option><option value="software">Software</option></select></div>
+        </div>
+        <div class="form-group"><label>Description *</label><textarea id="pDescription" rows="4" required></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label>Technology (comma separated) *</label><input type="text" id="pTechnology" required placeholder="Arduino, C++, IoT"></div>
+          <div class="form-group"><label>Difficulty</label><select id="pDifficulty"><option value="beginner">Beginner</option><option value="intermediate" selected>Intermediate</option><option value="advanced">Advanced</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Price (₹)</label><input type="number" id="pPrice" value="0" min="0"></div>
+          <div class="form-group"><label>Status</label><select id="pStatus"><option value="published">Published</option><option value="draft">Draft</option><option value="archived">Archived</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>GitHub URL</label><input type="url" id="pGithub" placeholder="https://github.com/..."></div>
+          <div class="form-group"><label>Demo URL</label><input type="url" id="pDemo" placeholder="https://..."></div>
+        </div>
+        <div class="form-group"><label>Thumbnail Image</label><input type="file" id="pThumbnail" accept="image/*"></div>
+        <div class="form-group">
+          <label class="checkbox-label"><input type="checkbox" id="pFeatured"><span>Featured Project</span></label>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" id="cancelBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="/js/app.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

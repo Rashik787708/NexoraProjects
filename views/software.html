@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software Projects - Nexora Projects</title>
+  <meta name="description" content="Browse innovative software projects including Web Apps, Mobile Apps, AI/ML and more.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+  <div id="loader" class="loader"><div class="loader-inner"><div class="loader-spinner"></div><p class="loader-text">Nexora Projects</p></div></div>
+  <div id="scroll-progress" class="scroll-progress"></div>
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">Nexora</span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/projects" class="nav-link">Projects</a>
+        <a href="/hardware" class="nav-link">Hardware</a>
+        <a href="/software" class="nav-link active">Software</a>
+        <a href="/about" class="nav-link">About</a>
+        <a href="/contact" class="nav-link">Contact</a>
+        <a href="/admin/login" class="nav-link nav-btn-admin">Admin</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-title fade-up">💻 Software Projects</h1>
+        <p class="page-subtitle fade-up">Explore Web Apps, Mobile Apps, AI/ML and Full-Stack projects</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="filter-bar fade-up">
+          <div class="search-box"><input type="text" id="searchInput" placeholder="Search software projects..." class="search-input"></div>
+          <select id="sortSelect" class="sort-select">
+            <option value="latest">Latest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+          </select>
+        </div>
+        <div class="projects-grid" id="projectsGrid"><div class="loading-placeholder">Loading projects...</div></div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="/" class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">Nexora</span></a><p>Innovative Hardware & Software Projects.</p></div><div class="footer-links"><h4>Quick Links</h4><a href="/">Home</a><a href="/projects">Projects</a><a href="/about">About</a><a href="/contact">Contact</a></div><div class="footer-links"><h4>Categories</h4><a href="/hardware">Hardware</a><a href="/software">Software</a></div></div><div class="footer-bottom"><p>&copy; 2026 Nexora Projects.</p></div></div></footer>
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+  <div id="toast" class="toast"></div>
+  <script src="/js/app.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',()=>{if(typeof loadCategoryProjects==='function')loadCategoryProjects('software');else{const s=document.createElement('script');s.onload=()=>loadCategoryProjects('software');document.body.appendChild(s);}});</script>
+</body>
+</html>
