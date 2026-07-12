@@ -163,8 +163,16 @@ async function loadFeaturedProjects() {
   const grid = document.getElementById('featuredProjects');
   if (!grid) return;
   const res = await apiFetch('/projects?featured=true&limit=6');
-  if (res.success) renderProjects('featuredProjects', res.data);
-  else grid.innerHTML = '<div class="loading-placeholder">Unable to load projects</div>';
+  if (res.success && res.data.length > 0) {
+    renderProjects('featuredProjects', res.data);
+    return;
+  }
+  const allRes = await apiFetch('/projects?limit=6');
+  if (allRes.success) {
+    renderProjects('featuredProjects', allRes.data);
+  } else {
+    grid.innerHTML = '<div class="loading-placeholder">Unable to load projects</div>';
+  }
 }
 
 /* --- Projects Page --- */
