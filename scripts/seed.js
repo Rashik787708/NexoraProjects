@@ -138,11 +138,11 @@ async function seed() {
 
     const admin = await User.create({
       name: 'Admin',
-      email: 'admin@nexora.com',
+      email: 'admin@nexora',
       password: 'admin123',
       role: 'admin',
     });
-    console.log('Admin user created: admin@nexora.com / admin123');
+    console.log('Admin user created: admin@nexora / admin123');
 
     const projects = await Project.insertMany(sampleProjects);
     console.log(`${projects.length} projects seeded`);

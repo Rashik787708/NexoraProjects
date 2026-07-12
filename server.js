@@ -11,10 +11,10 @@ const app = express();
 
 const seedAdmin = async () => {
   try {
-    const exists = await User.findOne({ email: 'admin@nexora.com' });
+    const exists = await User.findOne({ email: 'admin@nexora' });
     if (!exists) {
-      await User.create({ name: 'Admin', email: 'admin@nexora.com', password: 'admin123', role: 'admin' });
-      console.log('Default admin created: admin@nexora.com / admin123');
+      await User.create({ name: 'Admin', email: 'admin@nexora', password: 'admin123', role: 'admin' });
+      console.log('Default admin created: admin@nexora / admin123');
     }
   } catch (e) {
     console.error('Admin seed error:', e.message);

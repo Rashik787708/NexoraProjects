@@ -69,7 +69,7 @@ npm run seed
 ```
 
 This creates:
-- **Admin account:** `admin@nexora.com` / `admin123`
+- **Admin account:** `admin@nexora` / `admin123`
 - **10 sample projects** (5 hardware + 5 software)
 
 ### 4. Start the Server
@@ -259,7 +259,7 @@ Visit `https://your-app-name.onrender.com`
 
 - **Home page:** `https://your-app-name.onrender.com`
 - **Admin login:** `https://your-app-name.onrender.com/admin/login`
-- **Credentials:** `admin@nexora.com` / `admin123`
+- **Credentials:** `admin@nexora` / `admin123`
 
 > **Important:** Change the admin password after first login for production use.
 
