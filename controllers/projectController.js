@@ -40,7 +40,10 @@ exports.getProjects = async (req, res) => {
 
 exports.getProject = async (req, res) => {
   try {
-    const project = await Project.findOne({ slug: req.params.id }) || await Project.findById(req.params.id);
+    let project = await Project.findOne({ slug: req.params.id, status: 'published' });
+    if (!project) {
+      project = await Project.findOne({ _id: req.params.id, status: 'published' });
+    }
     if (!project) {
       return res.status(404).json({ success: false, message: 'Project not found' });
     }

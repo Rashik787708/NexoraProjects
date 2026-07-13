@@ -6,13 +6,11 @@ const {
   createProject,
   updateProject,
   deleteProject,
-  getDashboard,
   getAllProjectsAdmin,
 } = require('../controllers/projectController');
 const { protect } = require('../middleware/auth');
 const upload = require('../middleware/upload');
 
-router.get('/dashboard', protect, getDashboard);
 router.get('/admin/all', protect, getAllProjectsAdmin);
 router.get('/', getProjects);
 router.get('/:id', getProject);

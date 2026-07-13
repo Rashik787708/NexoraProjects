@@ -118,10 +118,10 @@
         .map(
           (m) => `
         <tr>
-          <td><strong>${m.name}</strong></td>
-          <td>${m.email}</td>
-          <td>${m.phone || '-'}</td>
-          <td style="max-width:250px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${m.message.replace(/"/g, '&quot;')}">${m.message}</td>
+          <td><strong>${escapeHtml(m.name)}</strong></td>
+          <td>${escapeHtml(m.email)}</td>
+          <td>${escapeHtml(m.phone || '-')}</td>
+          <td style="max-width:250px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${escapeHtml(m.message)}">${escapeHtml(m.message)}</td>
           <td><button class="action-btn ${m.responded ? 'action-btn-edit' : 'action-btn-delete'}" data-toggle-status="${m._id}" style="cursor:pointer">${m.responded ? 'Responded' : 'Pending'}</button></td>
           <td>${new Date(m.createdAt).toLocaleDateString()}</td>
         </tr>`
@@ -154,11 +154,11 @@
         .map(
           (p) => `
         <tr>
-          <td><strong>${p.title}</strong></td>
-          <td><span class="project-badge ${p.category === 'software' ? 'software' : ''}">${p.category}</span></td>
-          <td>${p.difficulty}</td>
+          <td><strong>${escapeHtml(p.title)}</strong></td>
+          <td><span class="project-badge ${p.category === 'software' ? 'software' : ''}">${escapeHtml(p.category)}</span></td>
+          <td>${escapeHtml(p.difficulty)}</td>
           <td>${p.featured ? '⭐ Yes' : 'No'}</td>
-          <td>${p.status}</td>
+          <td>${escapeHtml(p.status)}</td>
           <td>
             <div class="action-btns">
               <button class="action-btn action-btn-edit" data-edit="${p._id}">Edit</button>

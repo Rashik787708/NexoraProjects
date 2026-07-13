@@ -62,6 +62,12 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({ success: false, message: 'File too large. Max size is 2MB.' });
+  }
+  if (err.message && err.message.includes('Only image files')) {
+    return res.status(400).json({ success: false, message: err.message });
+  }
   res.status(500).json({ success: false, message: err.message || 'Internal Server Error' });
 });
 
@@ -71,22 +77,12 @@ async function start() {
   try {
     await connectDB();
 
-    await User.deleteMany({ email: 'admin@nexora.com' });
-
     const adminExists = await User.findOne({ email: 'admin@nexora' }).select('+password');
     if (!adminExists) {
       await User.create({ name: 'Admin', email: 'admin@nexora', password: 'admin123', role: 'admin' });
       console.log('Admin user created: admin@nexora / admin123');
     } else {
-      const bcrypt = require('bcryptjs');
-      const valid = await bcrypt.compare('admin123', adminExists.password);
-      if (!valid) {
-        adminExists.password = 'admin123';
-        await adminExists.save();
-        console.log('Admin password reset: admin@nexora / admin123');
-      } else {
-        console.log('Admin user ready: admin@nexora');
-      }
+      console.log('Admin user ready: admin@nexora');
     }
   } catch (e) {
     console.error('Startup error:', e.message);

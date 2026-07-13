@@ -15,8 +15,15 @@ exports.submitContact = async (req, res) => {
 
 exports.getContacts = async (req, res) => {
   try {
-    const contacts = await Contact.find().sort({ createdAt: -1 });
-    res.status(200).json({ success: true, data: contacts });
+    const { page = 1, limit = 50 } = req.query;
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const total = await Contact.countDocuments();
+    const contacts = await Contact.find().sort({ createdAt: -1 }).skip(skip).limit(parseInt(limit));
+    res.status(200).json({
+      success: true,
+      data: contacts,
+      pagination: { total, page: parseInt(page), pages: Math.ceil(total / parseInt(limit)) },
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

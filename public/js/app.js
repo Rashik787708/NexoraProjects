@@ -13,6 +13,16 @@ function showToast(message, type = 'success') {
   setTimeout(() => toast.classList.remove('show'), 3500);
 }
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 async function apiFetch(url, options = {}) {
   try {
     const res = await fetch(API + url, {
@@ -138,20 +148,20 @@ function createProjectCard(project) {
     : null;
 
   return `
-    <div class="project-card fade-up" onclick="window.location.href='/project/${project.slug || project._id}'">
+    <div class="project-card fade-up" onclick="window.location.href='/project/${escapeHtml(project.slug || project._id)}'">
       <div class="project-card-image">
-        ${imgSrc ? `<img src="${imgSrc}" alt="${project.title}" loading="lazy">` : `<div class="placeholder-img">${project.category === 'hardware' ? '🔧' : '💻'}</div>`}
+        ${imgSrc ? `<img src="${imgSrc}" alt="${escapeHtml(project.title)}" loading="lazy">` : `<div class="placeholder-img">${project.category === 'hardware' ? '🔧' : '💻'}</div>`}
       </div>
       <div class="project-card-body">
         <div class="project-card-meta">
-          <span class="project-badge ${categoryClass}">${project.category}</span>
-          <span class="difficulty-badge">${project.difficulty}</span>
+          <span class="project-badge ${categoryClass}">${escapeHtml(project.category)}</span>
+          <span class="difficulty-badge">${escapeHtml(project.difficulty)}</span>
           ${project.featured ? '<span class="project-badge">⭐ Featured</span>' : ''}
         </div>
-        <h3>${project.title}</h3>
-        <p>${project.description || ''}</p>
+        <h3>${escapeHtml(project.title)}</h3>
+        <p>${escapeHtml(project.description || '')}</p>
         <div class="project-tech-tags">
-          ${technologies.map((t) => `<span class="tech-tag">${t}</span>`).join('')}
+          ${technologies.map((t) => `<span class="tech-tag">${escapeHtml(t)}</span>`).join('')}
         </div>
         <div class="project-card-footer">
           <span class="project-price">${project.price > 0 ? '₹' + project.price : 'Free'}</span>
@@ -293,37 +303,37 @@ async function loadProjectDetail() {
       <a href="javascript:history.back()" class="detail-back">← Back</a>
       <div class="detail-header">
         <div class="detail-badges">
-          <span class="project-badge ${p.category === 'software' ? 'software' : ''}">${p.category}</span>
-          <span class="difficulty-badge">${p.difficulty}</span>
+          <span class="project-badge ${p.category === 'software' ? 'software' : ''}">${escapeHtml(p.category)}</span>
+          <span class="difficulty-badge">${escapeHtml(p.difficulty)}</span>
           ${p.featured ? '<span class="project-badge">⭐ Featured</span>' : ''}
         </div>
-        <h1 class="detail-title">${p.title}</h1>
+        <h1 class="detail-title">${escapeHtml(p.title)}</h1>
         <div class="detail-meta">
           <span>📅 ${new Date(p.createdAt).toLocaleDateString()}</span>
-          <span>🛠️ ${(p.technology || []).join(', ')}</span>
+          <span>🛠️ ${(p.technology || []).map(t => escapeHtml(t)).join(', ')}</span>
         </div>
       </div>
       <div class="detail-banner">
-        ${imgSrc ? `<img src="${imgSrc}" alt="${p.title}">` : `<div class="placeholder-img">${p.category === 'hardware' ? '🔧' : '💻'}</div>`}
+        ${imgSrc ? `<img src="${imgSrc}" alt="${escapeHtml(p.title)}">` : `<div class="placeholder-img">${p.category === 'hardware' ? '🔧' : '💻'}</div>`}
       </div>
       <div class="detail-content">
         <div class="detail-main">
           <h2>Description</h2>
-          <p>${p.description || 'No description available.'}</p>
+          <p>${escapeHtml(p.description || 'No description available.')}</p>
           <h2>Technologies Used</h2>
           <div class="project-tech-tags" style="margin-bottom:24px">
-            ${(p.technology || []).map((t) => `<span class="tech-tag">${t}</span>`).join('')}
+            ${(p.technology || []).map((t) => `<span class="tech-tag">${escapeHtml(t)}</span>`).join('')}
           </div>
         </div>
         <div class="detail-sidebar">
           <div class="sidebar-price">${p.price > 0 ? '₹' + p.price : 'Free'}</div>
-          <div class="sidebar-info-item"><span>Category</span><span>${p.category}</span></div>
-          <div class="sidebar-info-item"><span>Difficulty</span><span>${p.difficulty}</span></div>
-          <div class="sidebar-info-item"><span>Status</span><span>${p.status}</span></div>
+          <div class="sidebar-info-item"><span>Category</span><span>${escapeHtml(p.category)}</span></div>
+          <div class="sidebar-info-item"><span>Difficulty</span><span>${escapeHtml(p.difficulty)}</span></div>
+          <div class="sidebar-info-item"><span>Status</span><span>${escapeHtml(p.status)}</span></div>
           <div class="sidebar-info-item"><span>Created</span><span>${new Date(p.createdAt).toLocaleDateString()}</span></div>
           <div class="sidebar-links">
-            ${p.github ? `<a href="${p.github}" target="_blank" class="btn btn-outline">GitHub →</a>` : ''}
-            ${p.demo ? `<a href="${p.demo}" target="_blank" class="btn btn-outline">Live Demo →</a>` : ''}
+            ${p.github ? `<a href="${escapeHtml(p.github)}" target="_blank" class="btn btn-outline">GitHub →</a>` : ''}
+            ${p.demo ? `<a href="${escapeHtml(p.demo)}" target="_blank" class="btn btn-outline">Live Demo →</a>` : ''}
             <a href="/contact" class="btn btn-primary">Contact Us</a>
           </div>
         </div>

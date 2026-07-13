@@ -69,9 +69,17 @@ const projectSchema = new mongoose.Schema(
   }
 );
 
-projectSchema.pre('validate', function (next) {
+projectSchema.pre('validate', async function (next) {
   if (this.title && (this.isNew || this.isModified('title'))) {
-    this.slug = slugify(this.title, { lower: true, strict: true });
+    let base = slugify(this.title, { lower: true, strict: true });
+    let slug = base;
+    let counter = 1;
+    const Model = this.constructor;
+    while (await Model.exists({ slug, _id: { $ne: this._id } })) {
+      slug = `${base}-${counter}`;
+      counter++;
+    }
+    this.slug = slug;
   }
   next();
 });
