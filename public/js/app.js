@@ -149,6 +149,7 @@ function createProjectCard(project) {
 
   return `
     <div class="project-card fade-up" onclick="window.location.href='/project/${escapeHtml(project.slug || project._id)}'">
+      <button class="fav-btn" data-id="${project._id}" onclick="event.stopPropagation();window.handleFavBtn(this)" style="display:none">🤍</button>
       <div class="project-card-image">
         ${imgSrc ? `<img src="${imgSrc}" alt="${escapeHtml(project.title)}" loading="lazy">` : `<div class="placeholder-img">${project.category === 'hardware' ? '🔧' : '💻'}</div>`}
       </div>

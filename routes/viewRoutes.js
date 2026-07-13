@@ -13,6 +13,10 @@ router.get('/software', view('software.html'));
 router.get('/project/:slug', view('project-detail.html'));
 router.get('/about', view('about.html'));
 router.get('/contact', view('contact.html'));
+router.get('/login', view('login.html'));
+router.get('/register', view('register.html'));
+router.get('/profile', view('profile.html'));
+router.get('/favorites', view('favorites.html'));
 router.get('/admin/login', view('admin-login.html'));
 router.get('/admin/dashboard', view('admin-dashboard.html'));
 

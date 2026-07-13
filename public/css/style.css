@@ -524,9 +524,94 @@ input, select, textarea { font: inherit; color: inherit; }
 .auth-icon { font-size: 3rem; margin-bottom: 16px; }
 .auth-header h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
 .auth-header p { color: var(--text-secondary); font-size: .9rem; }
+.auth-divider { text-align: center; margin: 24px 0; position: relative; }
+.auth-divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border); }
+.auth-divider span { background: var(--card); padding: 0 16px; position: relative; color: var(--text-secondary); font-size: .85rem; }
+.auth-switch { text-align: center; margin-top: 24px; font-size: .9rem; color: var(--text-secondary); }
+.auth-switch a { color: var(--primary); text-decoration: none; font-weight: 600; }
+.auth-switch a:hover { text-decoration: underline; }
+.btn-google {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 12px 24px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--card); color: var(--text); font-weight: 600; font-size: .95rem;
+  cursor: pointer; text-decoration: none; transition: all .2s;
+}
+.btn-google:hover { background: var(--bg); border-color: var(--text-secondary); }
 
 /* ========== DASHBOARD ========== */
 .dashboard-main { padding-top: 100px; min-height: 100vh; }
+
+/* ========== NAV USER MENU ========== */
+.nav-user-menu { position: relative; }
+.nav-user-btn {
+  display: flex; align-items: center; gap: 8px; background: none; border: none;
+  cursor: pointer; padding: 4px 8px; border-radius: var(--radius-sm); transition: background .2s;
+}
+.nav-user-btn:hover { background: rgba(255,255,255,.05); }
+.nav-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+.nav-avatar-text {
+  width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; background: var(--primary); color: #fff; font-weight: 700; font-size: .85rem;
+}
+.nav-user-name { color: var(--text); font-size: .9rem; font-weight: 500; }
+.nav-dropdown {
+  display: none; position: absolute; top: calc(100% + 8px); right: 0;
+  min-width: 200px; background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: 0 16px 48px rgba(0,0,0,.3);
+  z-index: 1000; padding: 8px 0; overflow: hidden;
+}
+.nav-dropdown.show { display: block; }
+.dropdown-header { padding: 12px 16px; font-weight: 700; font-size: .9rem; border-bottom: 1px solid var(--border); }
+.dropdown-item {
+  display: block; width: 100%; padding: 10px 16px; border: none; background: none;
+  color: var(--text); font-size: .9rem; cursor: pointer; text-decoration: none; text-align: left;
+  transition: background .15s;
+}
+.dropdown-item:hover { background: rgba(255,255,255,.05); }
+.dropdown-divider { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
+
+/* ========== FAVORITE BUTTON ========== */
+.fav-btn {
+  position: absolute; top: 12px; right: 12px; z-index: 10;
+  width: 36px; height: 36px; border-radius: 50%; border: none;
+  background: rgba(0,0,0,.5); backdrop-filter: blur(8px);
+  font-size: 1rem; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; transition: all .2s; line-height: 1;
+}
+.fav-btn:hover { background: rgba(0,0,0,.7); transform: scale(1.1); }
+.fav-btn.fav-active { background: rgba(220,38,38,.8); }
+
+/* ========== PROFILE ========== */
+.profile-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 32px; margin-bottom: 24px;
+}
+.profile-header { display: flex; align-items: center; gap: 20px; margin-bottom: 24px; }
+.profile-avatar {
+  width: 80px; height: 80px; border-radius: 50%; overflow: hidden;
+  background: var(--bg); border: 2px solid var(--border); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-large {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  background: var(--primary); color: #fff; font-size: 2rem; font-weight: 700;
+}
+.profile-header h2 { margin-bottom: 4px; }
+.text-muted { color: var(--text-secondary); font-size: .9rem; }
+.auth-badge {
+  display: inline-block; padding: 4px 12px; border-radius: 20px;
+  background: rgba(255,255,255,.05); border: 1px solid var(--border);
+  font-size: .8rem; color: var(--text-secondary);
+}
+
+/* ========== FAVORITES PAGE EMPTY ========== */
+.empty-state { text-align: center; padding: 60px 20px; }
+.empty-state-icon { font-size: 4rem; margin-bottom: 16px; }
+.empty-state h3 { font-size: 1.3rem; margin-bottom: 8px; }
+.empty-state p { color: var(--text-secondary); margin-bottom: 24px; }
+
+/* ========== DASHBOARD ========== */
 .dash-header {
   display: flex; justify-content: space-between; align-items: center;
   margin-bottom: 32px;
@@ -756,4 +841,7 @@ input, select, textarea { font: inherit; color: inherit; }
   .dash-stats { grid-template-columns: 1fr; }
   .modal { max-width: 100%; }
   .cta-card { padding: 40px 24px; }
+  .nav-user-name { display: none; }
+  .profile-header { flex-direction: column; text-align: center; }
+  .profile-card { padding: 24px; }
 }

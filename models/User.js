@@ -10,33 +10,53 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, 'Email is required'],
       unique: true,
+      sparse: true,
       lowercase: true,
       match: [/^\S+@\S+$/, 'Please enter a valid email'],
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
       minlength: 6,
       select: false,
     },
+    avatar: {
+      type: String,
+      default: '',
+    },
     role: {
       type: String,
-      enum: ['admin'],
-      default: 'admin',
+      enum: ['user', 'admin'],
+      default: 'user',
     },
+    authProvider: {
+      type: String,
+      enum: ['local', 'google'],
+      default: 'local',
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+    favorites: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project',
+      },
+    ],
   },
   { timestamps: true }
 );
 
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+  if (!this.isModified('password') || !this.password) return next();
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
+  if (!this.password) return false;
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
