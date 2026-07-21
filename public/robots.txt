@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://nexoraprojects.com/sitemap.xml
+Sitemap: https://novaprojects.com/sitemap.xml

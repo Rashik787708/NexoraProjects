@@ -1,8 +1,8 @@
-# Nexora Projects
+# Nova Projects
 
 > Innovative Hardware & Software Projects for Students, Developers & Businesses.
 
-Live Demo: [https://nexora-projects.onrender.com](https://nexora-projects.onrender.com)
+Live Demo: [https://nova-projects.onrender.com](https://nova-projects.onrender.com)
 
 ---
 
@@ -41,8 +41,8 @@ Live Demo: [https://nexora-projects.onrender.com](https://nexora-projects.onrend
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/your-username/NexoraProjects.git
-cd NexoraProjects
+git clone https://github.com/your-username/NovaProjects.git
+cd NovaProjects
 npm install
 ```
 
@@ -56,7 +56,7 @@ Edit `.env`:
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/nexora-projects
+MONGODB_URI=mongodb://localhost:27017/nova-projects
 JWT_SECRET=your-random-secret-string-here
 JWT_EXPIRE=7d
 NODE_ENV=development
@@ -69,7 +69,7 @@ npm run seed
 ```
 
 This creates:
-- **Admin account:** `admin@nexora` / `admin123`
+- **Admin account:** `admin@nova` / `novaadmin123`
 - **10 sample projects** (5 hardware + 5 software)
 
 ### 4. Start the Server
@@ -85,7 +85,7 @@ Visit **http://localhost:5000**
 ## Project Structure
 
 ```
-NexoraProjects/
+NovaProjects/
 ├── public/
 │   ├── css/style.css          # Complete stylesheet
 │   ├── js/app.js              # Frontend logic
@@ -190,7 +190,7 @@ NexoraProjects/
 
 It will look like:
 ```
-mongodb+srv://myuser:mypassword@cluster0.xxxxx.mongodb.net/nexora-projects?retryWrites=true&w=majority
+mongodb+srv://myuser:mypassword@cluster0.xxxxx.mongodb.net/nova-projects?retryWrites=true&w=majority
 ```
 
 ### Step 2: Push Code to GitHub
@@ -199,10 +199,10 @@ mongodb+srv://myuser:mypassword@cluster0.xxxxx.mongodb.net/nexora-projects?retry
 # Initialize git (if not already)
 git init
 git add .
-git commit -m "Initial commit - Nexora Projects"
+git commit -m "Initial commit - Nova Projects"
 
 # Create a repo on github.com, then:
-git remote add origin https://github.com/your-username/NexoraProjects.git
+git remote add origin https://github.com/your-username/NovaProjects.git
 git branch -M main
 git push -u origin main
 ```
@@ -212,12 +212,12 @@ git push -u origin main
 1. Go to [dashboard.render.com](https://dashboard.render.com) and sign up
 2. Click **New +** → **Web Service**
 3. Connect your **GitHub account**
-4. Select your **NexoraProjects** repository
+4. Select your **NovaProjects** repository
 5. Configure the service:
 
 | Field | Value |
 |-------|-------|
-| **Name** | `nexora-projects` |
+| **Name** | `nova-projects` |
 | **Region** | Closest to your users |
 | **Branch** | `main` |
 | **Runtime** | `Node` |
@@ -245,7 +245,7 @@ After deployment, seed your production database:
 # Install mongosh if you don't have it, or use the Render shell
 # Or create a one-time seed script:
 
-MONGODB_URI="mongodb+srv://user:pass@cluster.mongodb.net/nexora-projects?retryWrites=true&w=majority" npm run seed
+MONGODB_URI="mongodb+srv://user:pass@cluster.mongodb.net/nova-projects?retryWrites=true&w=majority" npm run seed
 ```
 
 Or use Render's **Shell** tab in your service dashboard:
@@ -259,7 +259,7 @@ Visit `https://your-app-name.onrender.com`
 
 - **Home page:** `https://your-app-name.onrender.com`
 - **Admin login:** `https://your-app-name.onrender.com/admin/login`
-- **Credentials:** `admin@nexora` / `admin123`
+- **Credentials:** `admin@nova` / `novaadmin123`
 
 > **Important:** Change the admin password after first login for production use.
 
@@ -272,15 +272,15 @@ Visit `https://your-app-name.onrender.com`
 docker-compose up -d
 
 # Or build manually
-docker build -t nexora-projects .
-docker run -p 5000:5000 --env-file .env nexora-projects
+docker build -t nova-projects .
+docker run -p 5000:5000 --env-file .env nova-projects
 ```
 
 ---
 
 ## Post-Deployment Checklist
 
-- [ ] Change admin password from default `admin123`
+- [ ] Change admin password from default `novaadmin123`
 - [ ] Update `JWT_SECRET` to a strong random value
 - [ ] Verify MongoDB Atlas IP whitelist allows Render IPs
 - [ ] Test all pages load correctly

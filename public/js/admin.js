@@ -1,10 +1,10 @@
 /* ========================================
-   Nexora Projects - Admin Dashboard JS
+   Nova Projects - Admin Dashboard JS
    Relies on app.js for API, showToast, etc.
    ======================================== */
 
 (function () {
-  let adminToken = localStorage.getItem('nexora_token') || sessionStorage.getItem('nexora_token');
+  let adminToken = localStorage.getItem('nova_token') || sessionStorage.getItem('nova_token');
 
   function authHeaders() {
     return {
@@ -39,8 +39,8 @@
           const data = await res.json();
           if (data.success) {
             adminToken = data.token;
-            if (remember) localStorage.setItem('nexora_token', data.token);
-            else sessionStorage.setItem('nexora_token', data.token);
+            if (remember) localStorage.setItem('nova_token', data.token);
+            else sessionStorage.setItem('nova_token', data.token);
             showToast('Login successful!');
             setTimeout(() => (window.location.href = '/admin/dashboard'), 800);
           } else {
@@ -73,8 +73,8 @@
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
       logoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('nexora_token');
-        sessionStorage.removeItem('nexora_token');
+        localStorage.removeItem('nova_token');
+        sessionStorage.removeItem('nova_token');
         adminToken = null;
         window.location.href = '/admin/login';
       });

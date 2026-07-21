@@ -115,12 +115,12 @@ async function start() {
   try {
     await connectDB();
 
-    const adminExists = await User.findOne({ email: 'admin@nexora' }).select('+password');
+    const adminExists = await User.findOne({ email: 'admin@nova' }).select('+password');
     if (!adminExists) {
-      await User.create({ name: 'Admin', email: 'admin@nexora', password: 'admin123', role: 'admin', authProvider: 'local' });
-      console.log('Admin user created: admin@nexora / admin123');
+      await User.create({ name: 'Admin', email: 'admin@nova', password: 'novaadmin123', role: 'admin', authProvider: 'local' });
+      console.log('Admin user created: admin@nova / novaadmin123');
     } else {
-      console.log('Admin user ready: admin@nexora');
+      console.log('Admin user ready: admin@nova');
     }
   } catch (e) {
     console.error('Startup error:', e.message);

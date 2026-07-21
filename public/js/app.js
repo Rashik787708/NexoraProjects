@@ -1,5 +1,5 @@
 /* ========================================
-   Nexora Projects - Main Application JS
+   Nova Projects - Main Application JS
    ======================================== */
 
 const API = '/api';
@@ -297,7 +297,7 @@ async function loadProjectDetail() {
 
   const p = res.data;
   const imgSrc = p.thumbnail && p.thumbnail !== '/images/default-project.jpg' ? p.thumbnail : null;
-  document.title = `${p.title} - Nexora Projects`;
+  document.title = `${p.title} - Nova Projects`;
 
   container.innerHTML = `
     <div class="container">

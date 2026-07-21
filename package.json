@@ -1,5 +1,5 @@
 {
-  "name": "nexora-projects",
+  "name": "nova-projects",
   "version": "1.0.0",
   "description": "Innovative Hardware & Software Projects for Students, Developers & Businesses",
   "main": "server.js",
@@ -12,9 +12,9 @@
     "projects",
     "hardware",
     "software",
-    "nexora"
+    "nova"
   ],
-  "author": "Nexora Projects",
+  "author": "Nova Projects",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.18.1",

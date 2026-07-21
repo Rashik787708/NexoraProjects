@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const User = require('../models/User');
 const Project = require('../models/Project');
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/nexora-projects';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/nova-projects';
 
 const sampleProjects = [
   {
@@ -15,7 +15,7 @@ const sampleProjects = [
     price: 2499,
     featured: true,
     status: 'published',
-    github: 'https://github.com/nexora/smart-home',
+    github: 'https://github.com/nova/smart-home',
     demo: '',
   },
   {
@@ -27,7 +27,7 @@ const sampleProjects = [
     price: 999,
     featured: true,
     status: 'published',
-    github: 'https://github.com/nexora/plant-watering',
+    github: 'https://github.com/nova/plant-watering',
   },
   {
     title: 'Line Following Robot',
@@ -48,7 +48,7 @@ const sampleProjects = [
     price: 1799,
     featured: true,
     status: 'published',
-    github: 'https://github.com/nexora/weather-station',
+    github: 'https://github.com/nova/weather-station',
   },
   {
     title: 'RFID Door Lock System',
@@ -69,8 +69,8 @@ const sampleProjects = [
     price: 3999,
     featured: true,
     status: 'published',
-    github: 'https://github.com/nexora/ecommerce',
-    demo: 'https://demo.nexoraprojects.com',
+    github: 'https://github.com/nova/ecommerce',
+    demo: 'https://demo.novaprojects.com',
   },
   {
     title: 'Real-Time Chat Application',
@@ -81,8 +81,8 @@ const sampleProjects = [
     price: 2499,
     featured: true,
     status: 'published',
-    github: 'https://github.com/nexora/chat-app',
-    demo: 'https://chat.nexoraprojects.com',
+    github: 'https://github.com/nova/chat-app',
+    demo: 'https://chat.novaprojects.com',
   },
   {
     title: 'AI-powered Image Classifier',
@@ -93,7 +93,7 @@ const sampleProjects = [
     price: 2999,
     featured: false,
     status: 'published',
-    github: 'https://github.com/nexora/image-classifier',
+    github: 'https://github.com/nova/image-classifier',
   },
   {
     title: 'Personal Portfolio Generator',
@@ -104,8 +104,8 @@ const sampleProjects = [
     price: 499,
     featured: false,
     status: 'published',
-    github: 'https://github.com/nexora/portfolio-gen',
-    demo: 'https://portfolio.nexoraprojects.com',
+    github: 'https://github.com/nova/portfolio-gen',
+    demo: 'https://portfolio.novaprojects.com',
   },
   {
     title: 'Task Management API',
@@ -116,7 +116,7 @@ const sampleProjects = [
     price: 1499,
     featured: false,
     status: 'published',
-    github: 'https://github.com/nexora/task-api',
+    github: 'https://github.com/nova/task-api',
   },
 ];
 
@@ -138,11 +138,11 @@ async function seed() {
 
     const admin = await User.create({
       name: 'Admin',
-      email: 'admin@nexora',
-      password: 'admin123',
+      email: 'admin@nova',
+      password: 'novaadmin123',
       role: 'admin',
     });
-    console.log('Admin user created: admin@nexora / admin123');
+    console.log('Admin user created: admin@nova / novaadmin123');
 
     const projects = await Project.insertMany(sampleProjects);
     console.log(`${projects.length} projects seeded`);

@@ -1,9 +1,9 @@
 /* ========================================
-   Nexora Projects - User Auth & Features
+   Nova Projects - User Auth & Features
    ======================================== */
 
 (function () {
-  const USER_TOKEN_KEY = 'nexora_user_token';
+  const USER_TOKEN_KEY = 'nova_user_token';
   let currentUser = null;
 
   function getUserToken() {
